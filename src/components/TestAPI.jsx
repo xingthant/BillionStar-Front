@@ -8,7 +8,7 @@ const TestAPI = () => {
   const testBackend = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/products`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`, {
         withCredentials: true
       });
       setMessage(`API Success: ${response.data.length} products found`);
