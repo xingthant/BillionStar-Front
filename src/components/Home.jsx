@@ -10,10 +10,10 @@ const Home = () => {
 
   // Carousel images
   const carouselImages = [
-    './public/shirt.jpg',
-    './public/shirt2.jpg',
+    '/shirt.jpg',
+    '/shirt2.jpg',
     'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2087&q=80',
-    './public/shirt1.jpg'
+    '/shirt1.jpg'
   ];
 
   // Fetch new arrivals from backend
