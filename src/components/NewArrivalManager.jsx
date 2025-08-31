@@ -26,13 +26,13 @@ const NewArrivalManager = () => {
       try {
         setLoading(true);
         const [arrivalsRes, productsRes] = await Promise.all([
-          axios.get(`${import.meta.env.VITE_API_URL}/new-arrivals/all`, {
+          axios.get(`${import.meta.env.VITE_API_URL}/api/new-arrivals/all`, {
             withCredentials: true
           }).catch(error => {
             console.error('New arrivals fetch error:', error);
             return { data: [] };
           }),
-          axios.get(`${import.meta.env.VITE_API_URL}/products`).catch(error => {
+          axios.get(`${import.meta.env.VITE_API_URL}/api/products`).catch(error => {
             console.error('Products fetch error:', error);
             return { data: [] };
           })
@@ -53,13 +53,13 @@ const NewArrivalManager = () => {
     try {
       if (editingArrival) {
         await axios.put(
-          `${import.meta.env.VITE_API_URL}/new-arrivals/${editingArrival._id}`,
+          `${import.meta.env.VITE_API_URL}/api/new-arrivals/${editingArrival._id}`,
           formData,
           { withCredentials: true }
         );
       } else {
         await axios.post(
-          `${import.meta.env.VITE_API_URL}/new-arrivals`,
+          `${import.meta.env.VITE_API_URL}/api/new-arrivals`,
           formData,
           { withCredentials: true }
         );
@@ -93,7 +93,7 @@ const NewArrivalManager = () => {
     
     try {
       await axios.delete(
-        `${import.meta.env.VITE_API_URL}/new-arrivals/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/new-arrivals/${id}`,
         { withCredentials: true }
       );
       fetchData();
@@ -107,7 +107,7 @@ const NewArrivalManager = () => {
   const toggleActive = async (id, currentStatus) => {
     try {
       await axios.patch(
-        `${import.meta.env.VITE_API_URL}/new-arrivals/${id}/toggle`,
+        `${import.meta.env.VITE_API_URL}/api/new-arrivals/${id}/toggle`,
         {},
         { withCredentials: true }
       );
