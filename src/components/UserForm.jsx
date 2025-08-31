@@ -27,7 +27,7 @@ const UserForm = ({ user: userData, onSave, onCancel }) => {
 
     try {
       // Try different endpoints - your backend might use a different route
-      let endpoint = `${import.meta.env.VITE_API_URL}/auth/users/${userData._id}`;
+      let endpoint = `${import.meta.env.VITE_API_URL}/api/auth/users/${userData._id}`;
       
       const response = await axios.put(
         endpoint,
@@ -43,7 +43,7 @@ const UserForm = ({ user: userData, onSave, onCancel }) => {
       if (error.response?.status === 404) {
         try {
           // Try a different endpoint pattern
-          const alternativeEndpoint = `${import.meta.env.VITE_API_URL}/users/${userData._id}`;
+          const alternativeEndpoint = `${import.meta.env.VITE_API_URL}/api/users/${userData._id}`;
           const response = await axios.put(
             alternativeEndpoint,
             formData,
