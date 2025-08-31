@@ -34,7 +34,7 @@ const ProductForm = ({ product, onSave, onCancel }) => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/categories`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/categories`);
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -67,7 +67,7 @@ const ProductForm = ({ product, onSave, onCancel }) => {
         formData.append('image', imageFile);
         
         const uploadResponse = await axios.post(
-          `${import.meta.env.VITE_API_URL}/upload`,
+          `${import.meta.env.VITE_API_URL}/api/upload`,
           formData,
           {
             headers: { 'Content-Type': 'multipart/form-data' },
@@ -91,14 +91,14 @@ const ProductForm = ({ product, onSave, onCancel }) => {
       if (product) {
         // Update existing product
         response = await axios.put(
-          `${import.meta.env.VITE_API_URL}/products/${product._id}`,
+          `${import.meta.env.VITE_API_URL}/api/products/${product._id}`,
           productData,
           { withCredentials: true }
         );
       } else {
         // Create new product
         response = await axios.post(
-          `${import.meta.env.VITE_API_URL}/products`,
+          `${import.meta.env.VITE_API_URL}/api/products`,
           productData,
           { withCredentials: true }
         );
