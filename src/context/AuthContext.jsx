@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuthStatus = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth`, {
         withCredentials: true // Important for sending cookies
       });
       setUser(response.data.user);
