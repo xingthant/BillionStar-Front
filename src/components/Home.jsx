@@ -23,7 +23,7 @@ const Home = () => {
 
   const fetchNewArrivals = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/new-arrivals`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/new-arrivals`);
       setNewArrivals(response.data);
     } catch (error) {
       console.error('Error fetching new arrivals:', error);
