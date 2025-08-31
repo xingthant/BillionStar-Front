@@ -45,12 +45,12 @@ const AdminDashboard = () => {
       
       // Fetch data with error handling for each endpoint
       const [productsRes, ordersRes, categoriesRes] = await Promise.all([
-        axios.get(`${import.meta.env.VITE_API_URL}/products`).catch(error => {
+        axios.get(`${import.meta.env.VITE_API_URL}/api/products`).catch(error => {
           console.error('Products fetch error:', error);
           return { data: [] };
         }),
         // FIXED: Added withCredentials for orders request
-        axios.get(`${import.meta.env.VITE_API_URL}/orders`, {
+        axios.get(`${import.meta.env.VITE_API_URL}/api/orders`, {
           withCredentials: true
         }).catch(error => {
           console.error('Orders fetch error:', error);
@@ -59,7 +59,7 @@ const AdminDashboard = () => {
           }
           return { data: [] };
         }),
-        axios.get(`${import.meta.env.VITE_API_URL}/categories`).catch(error => {
+        axios.get(`${import.meta.env.VITE_API_URL}/api/categories`).catch(error => {
           console.error('Categories fetch error:', error);
           return { data: [] };
         })
@@ -76,7 +76,7 @@ const AdminDashboard = () => {
       setCategories(categoriesRes.data || []);
 
       try {
-      const usersRes = await axios.get(`${import.meta.env.VITE_API_URL}/users`, {
+      const usersRes = await axios.get(`${import.meta.env.VITE_API_URL}/api/users`, {
         withCredentials: true
       });
         setUsers(usersRes.data || []);
@@ -95,7 +95,7 @@ const AdminDashboard = () => {
   const refreshOrders = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/orders`,
+        `${import.meta.env.VITE_API_URL}/api/orders`,
         { withCredentials: true }
       );
       setOrders(response.data || []);
@@ -132,7 +132,7 @@ const AdminDashboard = () => {
 
     try {
       await axios.delete(
-        `${import.meta.env.VITE_API_URL}/products/${productId}`,
+        `${import.meta.env.VITE_API_URL}/api/products/${productId}`,
         { withCredentials: true }
       );
       setProducts(products.filter(p => p._id !== productId));
@@ -193,7 +193,7 @@ const AdminDashboard = () => {
 
     try {
       await axios.delete(
-        `${import.meta.env.VITE_API_URL}/categories/${categoryId}`,
+        `${import.meta.env.VITE_API_URL}/api/categories/${categoryId}`,
         { withCredentials: true }
       );
       setCategories(categories.filter(c => c._id !== categoryId));
@@ -248,7 +248,7 @@ const AdminDashboard = () => {
 
     try {
       await axios.delete(
-        `${import.meta.env.VITE_API_URL}/users/${userId}`,
+        `${import.meta.env.VITE_API_URL}/api/users/${userId}`,
         { withCredentials: true }
       );
       
@@ -267,7 +267,7 @@ const AdminDashboard = () => {
 
     try {
       await axios.delete(
-        `${import.meta.env.VITE_API_URL}/orders/${orderId}`,
+        `${import.meta.env.VITE_API_URL}/api/orders/${orderId}`,
         { withCredentials: true }
       );
       
@@ -296,7 +296,7 @@ const AdminDashboard = () => {
       console.log('Updating order:', orderId, 'to status:', newStatus);
       
       const response = await axios.put(
-        `${import.meta.env.VITE_API_URL}/orders/${orderId}`,
+        `${import.meta.env.VITE_API_URL}/api/orders/${orderId}`,
         { status: newStatus },
         { 
           withCredentials: true,
