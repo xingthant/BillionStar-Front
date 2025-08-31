@@ -21,7 +21,7 @@ const ProductList = () => {
       setError('');
       
       // Use the same API base URL for consistency
-      const url = `${import.meta.env.VITE_API_URL}/products`;
+      const url = `${import.meta.env.VITE_API_URL}/api/products`;
       const response = await axios.get(url);
       
       // Filter products on the frontend instead of backend query
@@ -44,7 +44,7 @@ const ProductList = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/categories`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/categories`);
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);
