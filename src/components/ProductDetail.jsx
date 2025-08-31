@@ -20,7 +20,7 @@ const ProductDetail = () => {
   const fetchProduct = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/products/${id}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
       setProduct(response.data);
     } catch (error) {
       setError('Product not found');
