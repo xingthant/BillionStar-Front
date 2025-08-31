@@ -1,0 +1,10 @@
+@import './styles/globals.css';
+@import './styles/Header.css';
+@import './styles/Home.css';
+@import './styles/Auth.css';
+@import './styles/Products.css';
+@import './styles/ProductDetail.css';
+/* Tailwind directives - keep these if you still want some Tailwind utility classes */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
