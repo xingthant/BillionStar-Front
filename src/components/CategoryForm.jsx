@@ -23,14 +23,14 @@ const CategoryForm = ({ category, onSave, onCancel }) => {
       if (category) {
         // Update existing category
         response = await axios.put(
-          `${import.meta.env.VITE_API_URL}/categories/${category._id}`,
+          `${import.meta.env.VITE_API_URL}/api/categories/${category._id}`,
           { name: name.trim() },
           { withCredentials: true }
         );
       } else {
         // Create new category
         response = await axios.post(
-          `${import.meta.env.VITE_API_URL}/categories`,
+          `${import.meta.env.VITE_API_URL}/api/categories`,
           { name: name.trim() },
           { withCredentials: true }
         );
