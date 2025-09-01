@@ -8,7 +8,7 @@ const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     fetchOrders();
@@ -22,9 +22,15 @@ const OrderHistory = () => {
         { withCredentials: true }
       );
       setOrders(response.data);
+      setError('');
     } catch (error) {
-      setError('Failed to fetch orders');
       console.error('Error fetching orders:', error);
+      if (error.response?.status === 401) {
+        setError('Your session has expired. Please login again.');
+        logout();
+      } else {
+        setError('Failed to fetch orders. Please try again later.');
+      }
     } finally {
       setLoading(false);
     }
