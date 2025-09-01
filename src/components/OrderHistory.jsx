@@ -18,7 +18,7 @@ const OrderHistory = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/orders/my-orders`,
+        `${import.meta.env.VITE_API_URL}/api/orders/my-orders`,
         { withCredentials: true }
       );
       setOrders(response.data);
