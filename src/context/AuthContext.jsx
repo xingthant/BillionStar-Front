@@ -20,19 +20,21 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   }, []);
 
-  const checkAuthStatus = async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
-        withCredentials: true 
-      });
-      setUser(response.data.user);
-    } catch (error) {
-      console.error('Auth check failed:', error);
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
-  };
+const checkAuthStatus = async () => {
+  try {
+    console.log('Checking auth status...');
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
+      withCredentials: true
+    });
+    console.log('Auth check successful:', response.data);
+    setUser(response.data.user);
+  } catch (error) {
+    console.error('Auth check failed:', error.response?.status, error.message);
+    setUser(null);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const login = async (email, password) => {
     try {
