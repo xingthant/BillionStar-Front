@@ -8,62 +8,27 @@ const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const { user, loading: authLoading } = useAuth(); // Get auth loading state
+  const { user } = useAuth();
 
   useEffect(() => {
-    // Only fetch orders if user is authenticated and auth check is complete
-    if (!authLoading && user) {
-      fetchOrders();
-    } else if (!authLoading && !user) {
-      // If auth check is complete but no user is logged in
-      setError('Please login to view your orders');
-      setLoading(false);
-    }
-  }, [user, authLoading]); // Add dependencies
+    fetchOrders();
+  }, []);
 
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      setError('');
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/orders/my-orders`,
+        `${import.meta.env.VITE_API_URL}/orders/my-orders`,
         { withCredentials: true }
       );
       setOrders(response.data);
     } catch (error) {
-      if (error.response?.status === 401) {
-        setError('Please login to view your orders');
-      } else {
-        setError('Failed to fetch orders');
-      }
+      setError('Failed to fetch orders');
       console.error('Error fetching orders:', error);
     } finally {
       setLoading(false);
     }
   };
-
-  // Show loading while auth is being checked
-  if (authLoading) {
-    return (
-      <div className="loading-state">
-        <div className="loading-spinner"></div>
-        <p>Checking authentication...</p>
-      </div>
-    );
-  }
-
-  // Show error if not logged in
-  if (!user) {
-    return (
-      <div className="error-state">
-        <div className="error-icon">🔒</div>
-        <p>Please login to view your orders</p>
-        <Link to="/login" className="continue-shopping-btn">
-          Login
-        </Link>
-      </div>
-    );
-  }
 
   if (loading) {
     return (
@@ -79,11 +44,6 @@ const OrderHistory = () => {
       <div className="error-state">
         <div className="error-icon">⚠️</div>
         <p>{error}</p>
-        {error.includes('login') && (
-          <Link to="/login" className="continue-shopping-btn">
-            Login
-          </Link>
-        )}
       </div>
     );
   }
