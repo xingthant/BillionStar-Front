@@ -23,10 +23,11 @@ export const AuthProvider = ({ children }) => {
   const checkAuthStatus = async () => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
-        withCredentials: true // Important for sending cookies
+        withCredentials: true 
       });
       setUser(response.data.user);
     } catch (error) {
+      console.error('Auth check failed:', error);
       setUser(null);
     } finally {
       setLoading(false);
