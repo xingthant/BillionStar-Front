@@ -8,27 +8,58 @@ const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
 
   useEffect(() => {
-    fetchOrders();
-  }, []);
+    if (!authLoading && user) {
+      fetchOrders();
+    } else if (!authLoading && !user) {
+      setError('Please login to view your orders');
+      setLoading(false);
+    }
+  }, [user, authLoading]);
 
   const fetchOrders = async () => {
     try {
       setLoading(true);
+      setError('');
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/api/orders/my-orders`,
         { withCredentials: true }
       );
       setOrders(response.data);
     } catch (error) {
-      setError('Failed to fetch orders');
+      if (error.response?.status === 401) {
+        setError('Please login to view your orders');
+      } else {
+        setError('Failed to fetch orders');
+      }
       console.error('Error fetching orders:', error);
     } finally {
       setLoading(false);
     }
   };
+
+  if (authLoading) {
+    return (
+      <div className="loading-state">
+        <div className="loading-spinner"></div>
+        <p>Checking authentication...</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="error-state">
+        <div className="error-icon">🔒</div>
+        <p>Please login to view your orders</p>
+        <Link to="/login" className="continue-shopping-btn">
+          Login
+        </Link>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
@@ -44,6 +75,11 @@ const OrderHistory = () => {
       <div className="error-state">
         <div className="error-icon">⚠️</div>
         <p>{error}</p>
+        {error.includes('login') && (
+          <Link to="/login" className="continue-shopping-btn">
+            Login
+          </Link>
+        )}
       </div>
     );
   }
