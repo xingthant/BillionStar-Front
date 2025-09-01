@@ -8,34 +8,23 @@ const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
     fetchOrders();
   }, []);
 
-  const fetchOrders = async (retryCount = 0) => {
+  const fetchOrders = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/orders/my-orders');
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/orders/my-orders`,
+        { withCredentials: true }
+      );
       setOrders(response.data);
-      setError('');
     } catch (error) {
+      setError('Failed to fetch orders');
       console.error('Error fetching orders:', error);
-      
-      if (error.response?.status === 401) {
-        if (retryCount < 1) {
-          // Try to refresh auth status first
-          await checkAuthStatus();
-          return fetchOrders(retryCount + 1);
-        }
-        setError('Your session has expired. Please login again.');
-        logout();
-      } else if (error.response?.status === 404) {
-        setError('Orders endpoint not found. Please contact support.');
-      } else {
-        setError('Failed to fetch orders. Please try again later.');
-      }
     } finally {
       setLoading(false);
     }
